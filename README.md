@@ -143,7 +143,7 @@ The scheduler assigns pods to appropriate worker nodes based on resource availab
 
 ### 📌 Definition
 
-The controller manager runs controllers that continuously monitor and ensure the desired state of the cluster.
+it runs continuously and watches the actual and desired state of objects. If there is a difference in the actual and desired state, it ensures that the kubernetes resource/object is in the desired state.
 
 ### ⚙️ Key Controllers
 
