@@ -1,1 +1,273 @@
-# kubernetes-cheat-sheet
+# 🚀 Kubernetes Cheat Sheet
+
+---
+
+## 🔹 What is Kubernetes?
+
+### 📌 Definition
+
+Kubernetes is an open-source container orchestration platform used to automate the deployment, scaling, and management of containerized applications.
+
+### ⚙️ Key Points
+
+* Developed by Google, now maintained by CNCF
+* Works with container tools like Docker
+* Handles scaling, load balancing, and self-healing
+* Declarative configuration using YAML
+
+### 🧠 Explanation
+
+Instead of manually managing containers across multiple machines, Kubernetes automates everything—ensuring your application runs reliably even if nodes fail.
+
+Container orchestration is the automated management of the entire lifecycle of containerized applications, including deployment, scaling, networking, and health monitoring.
+
+---
+
+## 🔹 Why Do We Use Kubernetes?
+
+### 📌 Definition
+
+Kubernetes is used to efficiently manage containerized applications at scale by automating deployment, scaling, networking, and availability.
+
+### ⚙️ Key Benefits
+
+* Auto-scaling (Horizontal Pod Autoscaling)
+* Self-healing (restarts failed containers)
+* Load balancing
+* Rolling updates & rollbacks
+* Service discovery
+
+### 🧠 Real-World Use Case
+
+In production, applications run across multiple servers. Kubernetes ensures:
+
+* Zero downtime deployments
+* High availability
+* Efficient resource utilization
+
+---
+
+## 🔹 Monolithic vs Microservices Architecture
+
+### 📌 Monolithic Architecture
+
+A monolithic application is built as a single, tightly coupled unit where all components are interconnected.
+
+### 📌 Microservices Architecture
+
+A microservices architecture breaks an application into small, independent services that communicate over APIs.
+
+### ⚖️ Key Differences
+
+| Feature         | Monolithic          | Microservices                   |
+| --------------- | ------------------- | ------------------------------- |
+| Structure       | Single codebase     | Multiple independent services   |
+| Scalability     | Hard to scale       | Easy to scale individually      |
+| Deployment      | Entire app deployed | Services deployed independently |
+| Fault Isolation | Poor                | High                            |
+| Flexibility     | Low                 | High                            |
+
+### 🧠 Interview Tip
+
+Kubernetes is mainly designed for **microservices architecture**, where multiple services need orchestration.
+
+---
+
+# 🏗️ Kubernetes Architecture
+
+## 🔹 High-Level Overview
+
+* Kubernetes cluster consists of:
+
+  * **Control Plane (Master Node)** → Manages the cluster
+  * **Worker Nodes** → Run applications (Pods)
+
+### 📌 Key Concept
+
+> "In Kubernetes, the control plane manages the cluster state, while worker nodes run the actual application workloads."
+
+---
+
+## 🔹 Control Plane (Master Node)
+
+### 📌 Definition
+
+The control plane is responsible for managing the overall state of the Kubernetes cluster, making decisions like scheduling, scaling, and maintaining desired state.
+
+---
+
+### ⚙️ Components of Control Plane
+
+## 1. kube-apiserver
+
+### 📌 Definition
+
+The API Server is the central communication hub of Kubernetes. All components interact with the cluster through the API server.
+
+### ⚙️ Key Points
+
+* Exposes Kubernetes API (REST)
+* Handles authentication & authorization
+* Acts as entry point to cluster
+
+---
+
+## 2. etcd
+
+### 📌 Definition
+
+etcd is a distributed key-value store that stores all cluster data and state.
+
+### ⚙️ Key Points
+
+* Stores configuration data
+* Critical for cluster consistency
+* Backup of etcd = backup of cluster
+
+---
+
+## 3. kube-scheduler
+
+### 📌 Definition
+
+The scheduler assigns pods to appropriate worker nodes based on resource availability and constraints.
+
+### ⚙️ Key Points
+
+* Considers CPU, memory, affinity rules
+* Chooses best node for pod placement
+
+---
+
+## 4. kube-controller-manager
+
+### 📌 Definition
+
+The controller manager runs controllers that continuously monitor and ensure the desired state of the cluster.
+
+### ⚙️ Key Controllers
+
+* Node Controller
+* Replication Controller
+* Endpoint Controller
+
+### 🧠 Example
+
+If a pod crashes, controller ensures a new one is created.
+
+---
+
+## 5. cloud-controller-manager
+
+### 📌 Definition
+
+The cloud controller manager integrates Kubernetes with cloud providers like AWS, Azure, or GCP.
+
+### ⚙️ Key Points
+
+* Manages cloud resources
+* Handles Load Balancers, storage, nodes
+* Separates cloud-specific logic from core Kubernetes
+
+---
+
+## 🔹 Worker Node
+
+### 📌 Definition
+
+Worker nodes are the machines where containerized applications (pods) are actually deployed and run.
+
+---
+
+### ⚙️ Components of Worker Node
+
+## 1. kubelet
+
+### 📌 Definition
+
+The kubelet is an agent that runs on each worker node and ensures containers are running as expected.
+
+### ⚙️ Key Points
+
+* Communicates with API server
+* Monitors pod health
+* Ensures desired state is maintained
+
+---
+
+## 2. kube-proxy
+
+### 📌 Definition
+
+kube-proxy manages networking rules on nodes and enables communication between services and pods.
+
+### ⚙️ Key Points
+
+* Handles service networking
+* Implements load balancing
+* Uses iptables or IPVS
+
+---
+
+## 3. Container Runtime
+
+### 📌 Definition
+
+The container runtime is responsible for running containers.
+
+### ⚙️ Examples
+
+* containerd
+* CRI-O
+* Docker (deprecated but still used)
+
+---
+
+## 🔹 CNI (Container Network Interface)
+
+### 📌 Definition
+
+CNI is a networking plugin that enables communication between pods across different nodes in a Kubernetes cluster.
+
+### ⚙️ Key Points
+
+* Provides pod-to-pod communication
+* Works across nodes
+* Assigns IP addresses to pods
+
+### ⚙️ Popular CNI Plugins
+
+* Flannel
+* Calico
+* Weave Net
+
+---
+
+## 🔹 Communication Flow
+
+* External systems → communicate via **API Server (HTTPS)**
+* Control plane components → communicate via **mTLS**
+* Worker nodes ↔ Control plane → via API Server
+* Pods communicate via **CNI network**
+
+---
+
+## 🔹 One-Line Summary (Must Remember)
+
+> "Kubernetes follows a master-worker architecture where the control plane manages the cluster state, and worker nodes execute containerized applications using components like kubelet, kube-proxy, and container runtime."
+
+---
+
+## 🔹 Pro Interview Tips
+
+* Always mention **API Server is the heart of Kubernetes**
+* Highlight **etcd as the single source of truth**
+* Emphasize **desired state vs current state**
+* Use terms like:
+
+  * *declarative model*
+  * *self-healing*
+  * *scalability*
+  * *high availability*
+
+---
