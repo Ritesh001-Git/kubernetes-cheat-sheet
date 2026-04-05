@@ -161,8 +161,9 @@ If a pod crashes, controller ensures a new one is created.
 
 ### 📌 Definition
 
-The cloud controller manager integrates Kubernetes with cloud providers like AWS, Azure, or GCP.
+When kubernetes is deployed in cloud environments, the cloud controller manager acts as a bridge between Cloud Platform APIs and the Kubernetes cluster.
 
+This way, the core kubernetes core components can work independently and allow the cloud providers to integrate with kubernetes using Cloud Controller binaries.
 ### ⚙️ Key Points
 
 * Manages cloud resources
