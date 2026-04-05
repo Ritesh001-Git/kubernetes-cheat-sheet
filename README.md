@@ -214,7 +214,7 @@ kube-proxy manages networking rules on nodes and enables communication between s
 
 ### 📌 Definition
 
-The container runtime is responsible for running containers.
+The container runtime is responsible for running containers. It is responsible for pulling images from container registries, running containers, allocating and isolating resources for containers, and managing the entire lifecycle of a container on a host.
 
 ### ⚙️ Examples
 
