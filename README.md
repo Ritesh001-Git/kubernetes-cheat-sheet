@@ -289,6 +289,8 @@ No matter the resource type (Deployment, DaemonSet, etc.), the first step is alw
 - The Ledger: The API Server writes the entry into etcd.
   - Status: At this point, the resource is "Born" but "Idle." It is just a row in a database.
 
+---
+
 ### 2. The "Controller" Phase (The Logic Loop)
 This is where resource-specific logic happens. Every resource type has a specific Controller inside the Controller Manager that "watches" for its type.
 
@@ -308,6 +310,8 @@ Once the controllers have broken down high-level objects (like Deployments) into
 - nFiltering/Scoring: It looks at all worker nodes. It filters out nodes that are full or don't match labels (Affinity).
 - The Binding: It picks the best node and sends a "Bind" request to the API Server, which updates the Pod's definition in etcd.
 
+---
+
 ### 4. The "Node" Phase (Physical Execution)
 Now the master components are done. The work moves to the specific Worker Node identified by the Scheduler.
 
@@ -315,6 +319,8 @@ Now the master components are done. The work moves to the specific Worker Node i
 - CRI (Container Runtime): Kubelet tells the runtime (e.g., containerd) to pull the image and start the container.
 - CNI (Networking): The network plugin assigns the Pod an IP.
 - CSI (Storage): If it's a StatefulSet or using a PVC, the Storage Interface mounts the physical disk to the node and then into the container.
+
+---
 
 ### 5. The "Feedback" Phase (Status Update)
 The Kubelet monitors the health of the container.
