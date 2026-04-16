@@ -301,3 +301,24 @@ Universal Rule: The Controller constantly compares Desired State (what you wrote
 
 ---
 
+### 3. The "Scheduling" Phase (Placement)
+Once the controllers have broken down high-level objects (like Deployments) into the smallest unit—the Pod—the Scheduler steps in.
+
+- The Watch: The Scheduler watches the API Server for any Pod that has a nodeName field that is empty.
+- nFiltering/Scoring: It looks at all worker nodes. It filters out nodes that are full or don't match labels (Affinity).
+- The Binding: It picks the best node and sends a "Bind" request to the API Server, which updates the Pod's definition in etcd.
+
+### 4. The "Node" Phase (Physical Execution)
+Now the master components are done. The work moves to the specific Worker Node identified by the Scheduler.
+
+- Kubelet Recognition: The Kubelet on that node sees a Pod assigned to it via the API Server.
+- CRI (Container Runtime): Kubelet tells the runtime (e.g., containerd) to pull the image and start the container.
+- CNI (Networking): The network plugin assigns the Pod an IP.
+- CSI (Storage): If it's a StatefulSet or using a PVC, the Storage Interface mounts the physical disk to the node and then into the container.
+
+### 5. The "Feedback" Phase (Status Update)
+The Kubelet monitors the health of the container.
+
+- It reports the status (Running, Succeeded, Failed) back to the API Server.
+- The API Server updates etcd.
+- The Controllers see the update. If the Pod failed and it's part of a Deployment, the loop starts all over again at Step 2 to recreate it.
