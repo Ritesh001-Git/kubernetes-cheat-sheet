@@ -25,3 +25,20 @@ When you tell Kubernetes to create a Pod, a few things happen "under the hood":
 - Single Container (Standard): Running a Node.js API or a Python microservice. This is 90% of use cases.
 - Sidecar Pattern (Multi-container): You have a main container running your Web App, and a second "Sidecar" container that sits next to it to collect logs or sync configuration files.
 - Init Containers: A specialized container that runs before your app starts (e.g., a script that waits for a database to be ready before launching the main app).
+
+4. The YAML Structure (The Blueprint)
+Every Kubernetes YAML file has four "Root" keys. Here is a breakdown of a standard Pod manifest:
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+
+```
