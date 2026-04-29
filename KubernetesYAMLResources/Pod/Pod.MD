@@ -26,7 +26,7 @@ When you tell Kubernetes to create a Pod, a few things happen "under the hood":
 - Sidecar Pattern (Multi-container): You have a main container running your Web App, and a second "Sidecar" container that sits next to it to collect logs or sync configuration files.
 - Init Containers: A specialized container that runs before your app starts (e.g., a script that waits for a database to be ready before launching the main app).
 
-4. The YAML Structure (The Blueprint)
+## 4. The YAML Structure (The Blueprint)
 Every Kubernetes YAML file has four "Root" keys. Here is a breakdown of a standard Pod manifest:
 
 ```
@@ -42,3 +42,5 @@ spec:
     - containerPort: 80
 
 ```
+
+### To create the Pod shown above, run the following command: `kubectl apply -f pod.yaml`
