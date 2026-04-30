@@ -43,4 +43,44 @@ spec:
 
 ```
 
-### To create the Pod shown above, run the following command: `kubectl apply -f pod.yaml`
+## Pod Management Commands
+
+### 1. Creating and Updating Pods
+
+| Command                                      | Description |
+|----------------------------------------------|-------------|
+| `kubectl apply -f filename.yaml`             | Standard approach to create or update a Pod from a YAML file. |
+| `kubectl run my-pod --image=nginx`           | Imperatively creates a Pod without needing a YAML file. |
+| `kubectl replace --force -f filename.yaml`   | Deletes the existing Pod and recreates it with updated configuration. |
+
+---
+
+### 2. Inspecting and Monitoring
+
+| Command                                      | Description |
+|----------------------------------------------|-------------|
+| `kubectl get pods`                           | Lists all Pods in the current namespace. |
+| `kubectl get pods -o wide`                   | Shows additional details like Node assignment and Pod IP. |
+| `kubectl describe pod <pod-name>`            | Provides detailed debugging info including events and failure reasons. |
+| `kubectl get pod <pod-name> -o yaml`         | Outputs the running Pod configuration in YAML format. |
+| `kubectl get pods --watch`                   | Continuously watches and updates Pod status in real time. |
+
+---
+
+### 3. Debugging and Troubleshooting
+
+| Command                                      | Description |
+|----------------------------------------------|-------------|
+| `kubectl logs <pod-name>`                    | Displays logs from the Pod. Use `-f` to stream logs in real time. |
+| `kubectl exec -it <pod-name> -- /bin/bash`   | Opens an interactive shell inside the container for debugging. |
+| `kubectl port-forward <pod-name> 8080:80`    | Forwards local port 8080 to port 80 on the Pod for testing. |
+
+---
+
+### 4. Deleting Pods
+
+| Command                                      | Description |
+|----------------------------------------------|-------------|
+| `kubectl delete pod <pod-name>`              | Deletes a specific Pod. |
+| `kubectl delete -f filename.yaml`            | Deletes the Pod defined in the YAML file. |
+| `kubectl delete pod --all`                   | ⚠️ Deletes all Pods in the current namespace. |
