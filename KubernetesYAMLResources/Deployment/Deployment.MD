@@ -60,49 +60,67 @@ spec:
 ```
 
 #### 🔹 replicas
-What it is:
-replicas: 3 tells the Deployment how many Pod instances should be running.
+##### What it is:
+- replicas: 3 tells the Deployment how many Pod instances should be running.
 
-Why it matters:
+##### Why it matters:
 
-Ensures high availability and load distribution
-If a Pod crashes, the Deployment (via ReplicaSet) creates a new one to maintain the count
-You can scale horizontally by changing this number
+- Ensures high availability and load distribution
+- If a Pod crashes, the Deployment (via ReplicaSet) creates a new one to maintain the count
+- You can scale horizontally by changing this number
 
 #### 🔹 selector
 
-What it is:
-Defines how the Deployment identifies which Pods it manages.
+##### What it is:
+- Defines how the Deployment identifies which Pods it manages.
 
-Why it is required:
+##### Why it is required:
 
-It links the Deployment → ReplicaSet → Pods
-Without a selector, Kubernetes wouldn’t know which Pods belong to this Deployment
-It must match the labels defined in the Pod template
+- It links the Deployment → ReplicaSet → Pods
+- Without a selector, Kubernetes wouldn’t know which Pods belong to this Deployment
+- It must match the labels defined in the Pod template
 
 #### 🔹 matchLabels
 
-What it is:
-A simple key-value label matcher.
+##### What it is:
+- A simple key-value label matcher.
 
-matchLabels:
-  app: nginx
+##### How it works:
 
-How it works:
-
-Matches Pods that have app: nginx in their labels
-Acts like a filter: “manage all Pods with this label”
-
-Note:
-There are also more advanced selectors (matchExpressions), but matchLabels is the simplest form.
+- Matches Pods that have app: nginx in their labels
+- Acts like a filter: “manage all Pods with this label”
+- Note: There are also more advanced selectors (matchExpressions), but matchLabels is the simplest form.
 
 #### 🔹 template
 
-What it is:
-The blueprint for creating Pods.
+##### What it is:
+- The blueprint for creating Pods.
 
-Why it is needed:
+##### Why it is needed:
 
-A Deployment doesn’t run containers directly—it creates Pods
-The template defines what each Pod should look like (containers, images, ports, etc.)
-Every replica is created from this template
+- A Deployment doesn’t run containers directly—it creates Pods
+- The template defines what each Pod should look like (containers, images, ports, etc.)
+- Every replica is created from this template
+
+## Deployment Management Commands
+
+| Category        | Command                                                                 | Description |
+|-----------------|-------------------------------------------------------------------------|-------------|
+| Management      | `kubectl apply -f deployment.yaml`                                     | Create or update a Deployment from a YAML file. |
+| Management      | `kubectl scale deployment payment-gateway-api --replicas=10`           | Instantly scale the number of Pod replicas. |
+| Management      | `kubectl rollout status deployment/payment-gateway-api`                | Check the rollout status of a Deployment. |
+
+## Inspection Commands
+
+| Category        | Command                                                                 | Description |
+|-----------------|-------------------------------------------------------------------------|-------------|
+| Inspection      | `kubectl get deploy`                                                   | List all Deployments in the current namespace. |
+| Inspection      | `kubectl rollout history deployment/payment-gateway-api`              | View rollout history and previous revisions. |
+| Inspection      | `kubectl describe deploy payment-gateway-api`                         | Show detailed information (useful for debugging rollout issues). |
+
+## Emergency Commands
+
+| Category        | Command                                                                 | Description |
+|-----------------|-------------------------------------------------------------------------|-------------|
+| Emergency       | `kubectl rollout undo deployment/payment-gateway-api`                 | Roll back to the previous stable version. |
+| Emergency       | `kubectl rollout restart deployment/payment-gateway-api`              | Restart all Pods (useful after ConfigMap/Secret updates). |
