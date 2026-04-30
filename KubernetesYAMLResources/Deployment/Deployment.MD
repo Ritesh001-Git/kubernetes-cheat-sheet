@@ -31,3 +31,78 @@ The Deployment creates and updates ReplicaSets to handle Pod scaling and version
 
 - Rollback capability
 Allows reverting to previous versions if a deployment fails.
+
+## 3. The YAML Structure (The Blueprint)
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+
+```
+
+🔹 replicas
+What it is:
+replicas: 3 tells the Deployment how many Pod instances should be running.
+
+Why it matters:
+
+Ensures high availability and load distribution
+If a Pod crashes, the Deployment (via ReplicaSet) creates a new one to maintain the count
+You can scale horizontally by changing this number
+
+🔹 selector
+
+What it is:
+Defines how the Deployment identifies which Pods it manages.
+
+Why it is required:
+
+It links the Deployment → ReplicaSet → Pods
+Without a selector, Kubernetes wouldn’t know which Pods belong to this Deployment
+It must match the labels defined in the Pod template
+
+🔹 matchLabels
+
+What it is:
+A simple key-value label matcher.
+
+matchLabels:
+  app: nginx
+
+How it works:
+
+Matches Pods that have app: nginx in their labels
+Acts like a filter: “manage all Pods with this label”
+
+Note:
+There are also more advanced selectors (matchExpressions), but matchLabels is the simplest form.
+
+🔹 template
+
+What it is:
+The blueprint for creating Pods.
+
+Why it is needed:
+
+A Deployment doesn’t run containers directly—it creates Pods
+The template defines what each Pod should look like (containers, images, ports, etc.)
+Every replica is created from this template
