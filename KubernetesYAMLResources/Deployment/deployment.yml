@@ -1,1 +1,23 @@
-
+apiVersion: aaps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+specs:
+  replicas: 2
+  selectors:
+    matchLebels:
+      app: nginx
+    template:
+      metadata:
+        labels:
+          app: nginx
+      spec:
+      - name: mginx_container
+        image: nginx:latest
+        ports:
+        - containersPort: 80
+        
+  
+  
