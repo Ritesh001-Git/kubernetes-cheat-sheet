@@ -59,7 +59,7 @@ spec:
 
 ```
 
-🔹 replicas
+#### 🔹 replicas
 What it is:
 replicas: 3 tells the Deployment how many Pod instances should be running.
 
@@ -69,7 +69,7 @@ Ensures high availability and load distribution
 If a Pod crashes, the Deployment (via ReplicaSet) creates a new one to maintain the count
 You can scale horizontally by changing this number
 
-🔹 selector
+#### 🔹 selector
 
 What it is:
 Defines how the Deployment identifies which Pods it manages.
@@ -80,7 +80,7 @@ It links the Deployment → ReplicaSet → Pods
 Without a selector, Kubernetes wouldn’t know which Pods belong to this Deployment
 It must match the labels defined in the Pod template
 
-🔹 matchLabels
+#### 🔹 matchLabels
 
 What it is:
 A simple key-value label matcher.
@@ -96,7 +96,7 @@ Acts like a filter: “manage all Pods with this label”
 Note:
 There are also more advanced selectors (matchExpressions), but matchLabels is the simplest form.
 
-🔹 template
+#### 🔹 template
 
 What it is:
 The blueprint for creating Pods.
