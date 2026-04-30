@@ -104,23 +104,23 @@ spec:
 
 ## Deployment Management Commands
 
-| Category        | Command                                                                 | Description |
-|-----------------|-------------------------------------------------------------------------|-------------|
-| Management      | `kubectl apply -f deployment.yaml`                                     | Create or update a Deployment from a YAML file. |
-| Management      | `kubectl scale deployment payment-gateway-api --replicas=10`           | Instantly scale the number of Pod replicas. |
-| Management      | `kubectl rollout status deployment/payment-gateway-api`                | Check the rollout status of a Deployment. |
+| Command                                                                | Description |
+|------------------------------------------------------------------------|-------------|
+| `kubectl apply -f deployment.yaml`                                     | Create or update a Deployment from a YAML file. |
+| `kubectl scale deployment payment-gateway-api --replicas=10`           | Instantly scale the number of Pod replicas. |
+| `kubectl rollout status deployment/payment-gateway-api`                | Check the rollout status of a Deployment. |
 
 ## Inspection Commands
 
-| Category        | Command                                                                 | Description |
-|-----------------|-------------------------------------------------------------------------|-------------|
-| Inspection      | `kubectl get deploy`                                                   | List all Deployments in the current namespace. |
-| Inspection      | `kubectl rollout history deployment/payment-gateway-api`              | View rollout history and previous revisions. |
-| Inspection      | `kubectl describe deploy payment-gateway-api`                         | Show detailed information (useful for debugging rollout issues). |
+| Command                                                               | Description |
+|-----------------------------------------------------------------------|-------------|
+| `kubectl get deploy`                                                  | List all Deployments in the current namespace. |
+| `kubectl rollout history deployment/payment-gateway-api`              | View rollout history and previous revisions. |
+| `kubectl describe deploy payment-gateway-api`                         | Show detailed information (useful for debugging rollout issues). |
 
 ## Emergency Commands
 
-| Category        | Command                                                                 | Description |
-|-----------------|-------------------------------------------------------------------------|-------------|
-| Emergency       | `kubectl rollout undo deployment/payment-gateway-api`                 | Roll back to the previous stable version. |
-| Emergency       | `kubectl rollout restart deployment/payment-gateway-api`              | Restart all Pods (useful after ConfigMap/Secret updates). |
+| Command                                                               | Description |
+|-----------------------------------------------------------------------|-------------|
+| `kubectl rollout undo deployment/payment-gateway-api`                 | Roll back to the previous stable version. |
+| `kubectl rollout restart deployment/payment-gateway-api`              | Restart all Pods (useful after ConfigMap/Secret updates). |
