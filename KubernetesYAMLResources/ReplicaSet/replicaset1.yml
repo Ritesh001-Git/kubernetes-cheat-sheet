@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: auth-service-rs
+  namespace: microservices
+  labels:
+    app: auth-service
+    tier: backend
+spec:
+  # The desired number of instances
+  replicas: 4
+  
+  # SELECTOR: The "glue" that connects the RS to the Pods
+  selector:
+    matchLabels:
+      app: auth-service
+      env: prod
+  
+  # TEMPLATE: The blueprint used to create NEW pods
+  template:
+    metadata:
+      labels:
+        app: auth-service  # Must match the selector above!
+        env: prod
+    spec:
+      containers:
+      - name: auth-container
+        image: company-repo/auth-svc:v1.2.0
+        ports:
+        - containerPort: 9090
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "200m"
+            memory: "512Mi"
