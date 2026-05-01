@@ -64,3 +64,6 @@ spec:
 
 💡 **Pro Tip:**  
 Using `--cascade=orphan` helps when you want to detach Pods from a ReplicaSet without deleting them (e.g., during migration or debugging).
+
+Why do we see random strings in Pod names?
+When a Deployment creates a ReplicaSet, it adds a hash (e.g., my-app-68df658). When the ReplicaSet creates Pods, it adds another hash (e.g., my-app-68df658-v2z9b). This ensures every Pod has a globally unique name while still being identifiable by its parent.
