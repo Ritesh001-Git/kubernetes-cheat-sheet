@@ -46,3 +46,19 @@ spec:
           ports:
             - containerPort: 80
 ```
+
+## 4. Essential DaemonSet Commands
+
+| Command | Description |
+|--------|-------------|
+| `kubectl get ds` | Lists all DaemonSets. Shows **DESIRED**, **CURRENT**, and **READY** counts based on node availability. |
+| `kubectl describe ds <name>` | Displays detailed info, including which nodes Pods are failing to start on. |
+| `kubectl rollout status ds/<name>` | Checks the progress of a DaemonSet update across the cluster. |
+| `kubectl rollout undo ds/<name>` | Rolls back the DaemonSet to a previous version if issues occur (e.g., crashing nodes). |
+| `kubectl get pods -o wide` | Verifies deployment across nodes; you should see one Pod IP per unique Node Name. |
+
+## 5. Summary of the "Big Three" Controllers
+
+- Deployment: "I need 5 copies of this API. I don't care where they sit."
+- StatefulSet: "I need 3 databases named db-0, db-1, db-2. They must never switch names or disks."
+- DaemonSet: "I need one of these on every single machine in the cluster, no exceptions."
