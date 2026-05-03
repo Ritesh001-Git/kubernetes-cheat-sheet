@@ -30,11 +30,7 @@ In a professional setting, a Namespace YAML is simple, but it is almost always a
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: payments-production
-  labels:
-    team: fintech
-    billing-center: "101"
-    env: prod
+ name: nginx
 ```
 
 ### The "Company Guardrail" (ResourceQuota):
