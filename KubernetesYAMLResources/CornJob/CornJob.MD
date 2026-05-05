@@ -26,7 +26,7 @@ What if a Job takes 2 hours to finish, but it’s scheduled to run every hour?
 ### C. Suspend Feature
 You can "pause" a CronJob without deleting it. This is great for maintenance windows where you don't want background tasks running while you're updating the database.
 
-3. The YAML Structure (The Blueprint)
+## 3. The YAML Structure (The Blueprint)
 ```
 apiVersion: batch/v1
 kind: CronJob
