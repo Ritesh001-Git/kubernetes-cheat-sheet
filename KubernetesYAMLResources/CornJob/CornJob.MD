@@ -66,7 +66,7 @@ spec:
 0 9 * * 1-5 — 9:00 AM every weekday (Mon-Fri).
 ```
 
-4. ## Essential CronJob Commands
+## 4. Essential CronJob Commands
 
 | Command | Purpose |
 |--------|--------|
