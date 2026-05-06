@@ -7,6 +7,7 @@ ClusterIP is the default service type. It provides a stable IP address that is o
 
 ## 2. NodePort (The "External Door" on every Server)
 NodePort builds on top of ClusterIP. It opens a specific port (usually in the range 30000-32767) on every single Node in your cluster.
+NodePort is the fastest way to expose your app externally without extra infrastructure, but not the cleanest for production.
 
 - Why use it? If you send traffic to <Node-IP>:<NodePort>, it gets routed to the internal ClusterIP, which then hits your Pods.
 - The Downside: It’s not very secure or scalable. You have to manage Node IPs, and if a Node goes down, that entry point dies.
