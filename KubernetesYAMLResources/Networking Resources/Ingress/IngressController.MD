@@ -65,14 +65,15 @@ data:
 | `kubectl exec -it -n ingress-nginx <pod-name> -- nginx -T` | See the actual generated NGINX config (the "final" state of your rules). |
 
 7. Popular Controllers in the Industry
-NGINX Ingress Controller: The gold standard. Used by 80% of the industry.
-Traefik: Modern, handles SSL (Let's Encrypt) automatically, and has a great dashboard.
-AWS Load Balancer Controller: Instead of running Nginx pods, it provisions an actual AWS Application Load Balancer (ALB) for every Ingress resource.
-Istio/Envoy: Used for "Service Mesh" architectures where you need advanced security, mTLS, and observability.
 
-Summary of the 
+- NGINX Ingress Controller: The gold standard. Used by 80% of the industry.
+- Traefik: Modern, handles SSL (Let's Encrypt) automatically, and has a great dashboard.
+- AWS Load Balancer Controller: Instead of running Nginx pods, it provisions an actual AWS Application Load Balancer (ALB) for every Ingress resource.
+- Istio/Envoy: Used for "Service Mesh" architectures where you need advanced security, mTLS, and observability.
 
-## Request Flow
+### Summary of the 
+
+#### Request Flow
 
 ```text
 User Request  (A client sends an HTTP/HTTPS request.)
