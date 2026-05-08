@@ -40,10 +40,10 @@ spec:
               number: 80
 
 ```
-#### Annoatation
+### Annoatation
 Annotations in an Ingress are key-value metadata used to configure the behavior of the Ingress Controller.
 
-#### TLS
+### TLS
 ou can secure an Ingress by specifying a Secret that contains a TLS private key and certificate. The Ingress resource only supports a single TLS port, 443.
 
 ```
