@@ -3,7 +3,7 @@ Ingress is an API object that manages external access to the services in a clust
 Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Traffic routing is controlled by rules defined on the Ingress resource.
 Ingress is the Front Gate and Security Guard. While a LoadBalancer service creates one external IP for one service, an Ingress allows you to route traffic to dozens of different services using a single IP address, based on the URL path or domain name.
 
-![Ingress Architecture](ingress.svg)
+<img src="ingress.svg" alt="Example Image" width="600"/>
 
 ### Why do we use it?
 
