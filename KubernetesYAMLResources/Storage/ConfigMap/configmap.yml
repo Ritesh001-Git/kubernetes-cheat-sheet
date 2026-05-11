@@ -1,0 +1,39 @@
+# ConfigMap
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config-map
+
+data:
+  MYSQL_DATABASE: mydb
+  MYSQL_USER: admin
+  MYSQL_PASSWORD: secret
+
+# Pod / Deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-app
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: mysql-app
+
+  template:
+    metadata:
+      labels:
+        app: mysql-app
+
+    spec:
+      containers:
+      - name: mysql-container
+        image: mysql:8
+
+        envFrom:
+        - configMapRef:
+            name: mysql-config-map
