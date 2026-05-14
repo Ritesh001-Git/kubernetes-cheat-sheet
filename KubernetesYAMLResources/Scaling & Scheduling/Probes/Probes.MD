@@ -133,5 +133,3 @@ exec:
 Be careful with **Liveness Probes**. If your database goes down and your app starts failing its Liveness probe because it can't talk to the DB, Kubernetes will restart all your app Pods at once. This creates a "thundering herd" effect that can crash your cluster further. 
 
 **Pro-Tip:** Make your Liveness probe check if the *app* is alive, and use the Readiness probe to check if *external dependencies* (like DBs) are available.
-
-Now that you've mastered health checks, do you want to explore **LimitRanges** to set default resources, or have we completed your Kubernetes roadmap?
