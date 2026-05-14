@@ -45,7 +45,36 @@ spec:
     limits.cpu: "4"
     limits.memory: 8Gi
 ```
-
+### In Workload (resource)
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          resources:  // ResourceQuota
+            requests: // Needed
+              cpu: "200m"
+              memory: "256Mi"
+            limits: // max
+              cpu: "500m"
+              memory: "512Mi"
+```
 ## 4. How it Works (The Admission Controller)
 When you run kubectl apply, the Kubernetes Admission Controller checks the Namespace’s ResourceQuota.
 
