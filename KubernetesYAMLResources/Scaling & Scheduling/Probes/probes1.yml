@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  template:
+    spec:
+      containers:
+      - name: app-container
+        image: company/order-api:v3.2
+        
+        # 1. STARTUP: Give the app 30 seconds to boot
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          failureThreshold: 30
+          periodSeconds: 10 # Total 300s allowed for startup
+
+        # 2. LIVENESS: Check every 20s if the app is frozen
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 20
+          failureThreshold: 3
+
+        # 3. READINESS: Check every 10s if we can take traffic
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          periodSeconds: 10
+          successThreshold: 1 # Must pass once to be "Ready"
+          failureThreshold: 3 # 3 failures and we stop traffic
