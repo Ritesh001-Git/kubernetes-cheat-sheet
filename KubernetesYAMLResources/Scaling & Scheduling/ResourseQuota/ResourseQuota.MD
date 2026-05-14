@@ -29,6 +29,23 @@ It's not just about CPU/RAM. You can limit:
 - Services: How many IPs can they take?
 - ConfigMaps/Secrets: Preventing metadata bloat.
 
+## 3. The YAML Structure (The Blueprint)
+
+```
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota
+  namespace: nginx
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "2"
+    requests.memory: 4Gi
+    limits.cpu: "4"
+    limits.memory: 8Gi
+```
+
 ## 4. How it Works (The Admission Controller)
 When you run kubectl apply, the Kubernetes Admission Controller checks the Namespace’s ResourceQuota.
 
@@ -36,7 +53,17 @@ When you run kubectl apply, the Kubernetes Admission Controller checks the Names
 - It adds the resources requested by your new YAML.
 - If the total exceeds the "hard" limit in the ResourceQuota, you get a 403 Forbidden error: "exceeded quota: team-alpha-quota, requested: pods=1, used: pods=20, limited: pods=20"
 
-Command	Purpose
-kubectl get quota -n <namespace>	List all quotas in a namespace.
-kubectl describe quota <name> -n <namespace>	The most important command. Shows exactly how much is being Used vs. the Hard limit.
-kubectl get pods -n <namespace>	If pods are failing to start, check the describe output of the quota first..
+## 5. Essential ResourceQuota Commands
+| Command | Purpose |
+|---|---|
+| `kubectl get quota -n <namespace>` | List all quotas in a namespace. |
+| `kubectl describe quota <name> -n <namespace>` | The most important command. Shows exactly how much is being **Used** vs. the **Hard** limit. |
+| `kubectl get pods -n <namespace>` | If pods are failing to start, check the `describe` output of the quota first. |
+
+## 6. The "Gotcha": LimitRanges
+While a ResourceQuota limits the entire Namespace, a LimitRange limits the individual Pod.
+
+- ResourceQuota: "This whole team can only have 10 CPUs total."
+- LimitRange: "Every single Pod created here must be between 0.1 CPU and 2.0 CPU."
+
+Tech Industry Tip: Always pair your ResourceQuota with a LimitRange. This ensures that if a developer forgets to set resource limits on their Pod, the LimitRange will automatically inject "Default" values so the Pod doesn't get rejected by the ResourceQuota.
