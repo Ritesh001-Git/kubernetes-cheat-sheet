@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-training-model
+  namespace: data-science
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: ml-worker
+    spec:
+      containers:
+      - name: cuda-container
+        image: company/ml-processor:latest
+        
+      # THE TOLERATION
+      tolerations:
+      - key: "hardware"
+        operator: "Equal"
+        value: "gpu"
+        effect: "NoSchedule"
