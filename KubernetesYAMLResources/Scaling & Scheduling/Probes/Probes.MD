@@ -118,7 +118,6 @@ exec:
 ```
     tcpSocket:
       port: 5432
-    ```
 ```
 
 ## 6. Essential Troubleshooting Commands
