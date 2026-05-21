@@ -6,6 +6,11 @@ In Kubernetes, Taints and Tolerations work together to ensure that application P
 - Taint: Applied to a Node. It marks the node so that no Pods can schedule onto it unless they explicitly "tolerate" that taint.
 - Toleration: Applied to a Pod. It allows (but does not force) the Pod to schedule onto a node with a matching taint.
 
+Think of it like:
+
+- Taint on Node → “Keep pods away from me”
+- Toleration on Pod → “This pod is allowed to ignore that restriction”
+
 If Node Affinity is like a magnet that attracts a Pod to a specific node, Taints are like a bug spray that repels Pods, and Tolerations are the protective gear that allows a Pod to ignore the spray.
 
 ## 2. The Three Taint Effects
