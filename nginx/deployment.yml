@@ -24,6 +24,25 @@ spec:
 
           ports:
             - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 3
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+            
 
           resources:
             requests:
@@ -34,7 +53,7 @@ spec:
               memory: 256Mi
 
           volumeMounts:
-            - mountPath: /usr/share/nginx/html
+            - mountPath: /data
               name: my-volume
 
       volumes:
