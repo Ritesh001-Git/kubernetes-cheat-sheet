@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: notes-app-nodeport
+  namespace: notes-app
+spec:
+  selector:
+    app: notes-app
+  ports:
+    - port: 80
+      targetPort: 8000
+      nodePort: 30007   # must be in 30000–32767
+  type: NodePort

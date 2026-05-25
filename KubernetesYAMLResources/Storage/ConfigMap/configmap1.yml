@@ -1,0 +1,36 @@
+# Step 1: Create the ConfigMap (The "Source")
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: payment-api-config
+  namespace: production
+data:
+  # Key-Value pairs
+  LOG_LEVEL: "info"
+  MAX_RETRIES: "5"
+  DB_URL: "postgres://db-service:5432/orders"
+  FEATURE_QUICK_CHECKOUT: "true"
+
+  # Option A: Injecting Specific Keys
+
+  spec:
+  containers:
+    - name: api-container
+      image: company/payment-api:v1.0
+      env:
+        - name: APP_LOG_LEVEL   # The name inside the container
+          valueFrom:
+            configMapKeyRef:
+              name: payment-api-config # Name of the ConfigMap
+              key: LOG_LEVEL           # Key inside the ConfigMap
+
+# Option B: Injecting ALL Keys (The "Clean" Way)
+
+spec:
+  containers:
+    - name: api-container
+      image: company/payment-api:v1.0
+      envFrom:
+        - configMapRef:
+            name: payment-api-config

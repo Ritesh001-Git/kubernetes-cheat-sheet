@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nightly-data-cleanup
+  namespace: infrastructure
+  labels:
+    component: batch-processor
+spec:
+  # The "Guardrails" for the Job
+  backoffLimit: 4           # Retry 4 times before marking the job as "Failed"
+  activeDeadlineSeconds: 600 # If the job takes longer than 10 mins, kill it
+  
+  # Scaling the work
+  completions: 1            # Total number of successful pods needed
+  parallelism: 3            # How many pods to run at the same time
+  
+  template:
+    metadata:
+      labels:
+        job-name: cleanup-task
+    spec:
+      containers:
+      - name: processor
+        image: company-repo/batch-tool:v4.2
+        command: ["python", "cleanup.py"]
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "1"
+            memory: "2Gi"
+            
+      # IMPORTANT: Jobs MUST have a restartPolicy of OnFailure or Never
+      # 'Always' is for Deployments, not Jobs.
+      restartPolicy: OnFailure
+      
+  # Clean up the finished pods automatically after 1 hour (3600s)
+  ttlSecondsAfterFinished: 3600

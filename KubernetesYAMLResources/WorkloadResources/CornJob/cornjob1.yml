@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: database-backup-weekly
+  namespace: infrastructure
+spec:
+  # The Schedule: Minute Hour DayOfMonth Month DayOfWeek
+  # This means: "At 03:00 on Sunday."
+  schedule: "0 3 * * 0" 
+  
+  # CONCURRENCY: Don't start a new backup if the last one is still running
+  concurrencyPolicy: Forbid
+  
+  # RELIABILITY: How many old jobs to keep for debugging
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  
+  # If the scheduler misses its time (e.g., cluster was down), 
+  # how late can it start? (Seconds)
+  startingDeadlineSeconds: 600
+
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: backup-worker
+        spec:
+          containers:
+          - name: backup-agent
+            image: postgres:15-alpine
+            command: ["/bin/sh", "-c", "pg_dump -h db-host my_db > /backup/db.sql"]
+            resources:
+              requests:
+                cpu: "200m"
+                memory: "512Mi"
+              limits:
+                cpu: "500m"
+                memory: "1Gi"
+          
+          restartPolicy: OnFailure # Required for Jobs/CronJobs

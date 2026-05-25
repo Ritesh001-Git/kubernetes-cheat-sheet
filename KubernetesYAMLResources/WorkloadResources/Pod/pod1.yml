@@ -1,0 +1,27 @@
+# 1. Which version of the K8s API to use
+apiVersion: v1
+
+# 2. What kind of resource are we creating?
+kind: Pod
+
+# 3. Data that helps identify the resource (Name, Labels)
+metadata:
+  name: my-webapp-pod
+  labels:
+    app: frontend
+    env: production
+
+# 4. The actual configuration of the containers
+spec:
+  containers:
+    - name: nginx-container        # Name of the container
+      image: nginx:1.25            # The Docker image to pull
+      ports:
+        - containerPort: 80        # The port the container listens on
+      resources:                   # Resource limits (Best Practice!)
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"

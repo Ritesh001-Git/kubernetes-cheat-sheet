@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-database-prod-001
+  labels:
+    type: local
+    storage-tier: fast
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce # Only one node can mount this at a time
+  persistentVolumeReclaimPolicy: Retain # Don't delete data if PVC is deleted
+  storageClassName: manual
+  hostPath:
+    path: "/mnt/data/db-storage" # In cloud, this would be an EBS ID or GCE Disk Name
