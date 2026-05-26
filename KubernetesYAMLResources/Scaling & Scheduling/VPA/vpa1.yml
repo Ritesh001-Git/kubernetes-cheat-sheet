@@ -1,0 +1,27 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: search-indexer-vpa
+  namespace: data-processing
+spec:
+  # Point to the deployment we want to optimize
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: search-indexer
+    
+  # Set the operational behavior
+  updatePolicy:
+    updateMode: "Auto" # Will automatically restart pods to scale them
+    
+  # Safety boundaries to prevent runaway resource consumption
+  resourcePolicy:
+    containerPolicies:
+      - containerName: '*' # Applies to all containers in the pod
+        minAllowed:
+          cpu: "100m"
+          memory: "128Mi"
+        maxAllowed:
+          cpu: "2"
+          memory: "4Gi"
+        controlledResources: ["cpu", "memory"]
