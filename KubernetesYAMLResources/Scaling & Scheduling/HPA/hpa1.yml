@@ -1,0 +1,30 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: billing-api-hpa
+  namespace: production
+spec:
+  # The target deployment to scale
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: billing-api
+    
+  # Bounds of scaling
+  minReplicas: 2      # High Availability default minimum
+  maxReplicas: 15     # Ceiling to prevent run-away cloud costs
+  
+  # Metrics driving the scaling logic
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70 # Scale up if avg CPU utilization crosses 70%
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80 # Scale up if avg RAM utilization crosses 80%
