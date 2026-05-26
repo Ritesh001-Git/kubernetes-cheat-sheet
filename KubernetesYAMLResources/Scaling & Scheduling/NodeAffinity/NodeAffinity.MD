@@ -80,7 +80,7 @@ Node Affinity depends completely on your nodes having accurate labels. Here is h
 | `kubectl label nodes <node-name> storage-type=ssd` | Apply a label: Add a key-value pair to a physical machine. |
 | `kubectl label nodes <node-name> storage-type-` | Remove a label: Note the minus (`-`) sign at the end of the key. |
 
-6. Reminder: Taints vs. Affinity
+## 6. Reminder: Taints vs. Affinity
 
 - Node Affinity draws a Pod toward a Node.
 - Taints push a Pod away from a Node.
