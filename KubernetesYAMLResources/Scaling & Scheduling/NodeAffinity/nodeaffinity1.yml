@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-processor
+  namespace: production
+spec:
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: processor-worker
+    spec:
+      containers:
+      - name: main
+        image: company/image-encoder:v2.1
+        
+      # THE AFFINITY CONFIGURATION
+      affinity:
+        nodeAffinity:
+          
+          # 1. HARD RULE: Must be deployed on an SSD instance type
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: storage-type
+                operator: In
+                values:
+                - ssd
+                - nvme
+                
+          # 2. SOFT RULE: Prefer to run in the US-West-1 region if possible
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 80 # Priority score (1-100)
+            preference:
+              matchExpressions:
+              - key: topology.kubernetes.io/zone
+                operator: In
+                values:
+                - us-west-1a
