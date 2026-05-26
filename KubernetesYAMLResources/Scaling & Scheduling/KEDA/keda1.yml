@@ -1,0 +1,28 @@
+# Example: Scaling an API Worker based on RabbitMQ Queue Depth
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: order-processor-scaler
+  namespace: e-commerce
+spec:
+  # The deployment target KEDA needs to watch and scale
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: order-processor-worker
+    
+  minReplicaCount: 0  # True scale-to-zero capability!
+  maxReplicaCount: 30 # Guardrail ceiling
+  
+  cooldownPeriod: 300 # How many seconds to wait before scaling back to 0
+  
+  # The triggers that drive the scaling logic
+  triggers:
+  - type: rabbitmq
+    metadata:
+      queueName: orders-queue
+      value: "20" # Target value: Spawn 1 new pod for every 20 messages in queue
+      mode: QueueLength
+    # Authentication reference for queue login details
+    authenticationRef:
+      name: keda-rabbitmq-auth
