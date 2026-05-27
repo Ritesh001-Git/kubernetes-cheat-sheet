@@ -151,6 +151,7 @@ The absolute best way to verify permissions without breaking things is the `auth
 | Command | Purpose |
 |---|---|
 | `kubectl auth can-i delete pods --namespace=testing` | Check if your current user can perform an action. |
+| `kubectl auth can-i get pods --as=apache-user -n apache` | Check if your current user can perform an action. |
 | `kubectl auth can-i list secrets --as=system:serviceaccount:testing:pod-cleaner-sa -n testing` | The #1 Security Check: Spoof/impersonate a ServiceAccount to test if its access is properly isolated. |
 | `kubectl get clusterrolebinding` | List all global access bindings in the cluster. |
 
