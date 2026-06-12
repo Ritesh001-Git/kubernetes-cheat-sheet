@@ -1,0 +1,11 @@
+apiVersion: ritesh.com/v1
+kind: Project
+metadata:
+  name: ecommerce-platform
+  namespace: default
+spec:
+  projectName: "E-Commerce Platform"
+  owner: "Ritesh"
+  technology: "Kubernetes"
+  environment: "Production"
+  status: "Active"
