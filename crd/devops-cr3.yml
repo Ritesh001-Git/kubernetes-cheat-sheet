@@ -1,0 +1,11 @@
+apiVersion: ritesh.com/v1
+kind: Project
+metadata:
+  name: inventory-management
+  namespace: default
+spec:
+  projectName: "Inventory Management System"
+  owner: "Ritesh"
+  technology: "Spring Boot"
+  environment: "Staging"
+  status: "In Progress"
