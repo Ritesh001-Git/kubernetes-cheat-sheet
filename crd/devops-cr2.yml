@@ -1,0 +1,11 @@
+apiVersion: ritesh.com/v1
+kind: Project
+metadata:
+  name: customer-portal
+  namespace: default
+spec:
+  projectName: "Customer Self-Service Portal"
+  owner: "Ritesh"
+  technology: "React"
+  environment: "Development"
+  status: "Planning"
