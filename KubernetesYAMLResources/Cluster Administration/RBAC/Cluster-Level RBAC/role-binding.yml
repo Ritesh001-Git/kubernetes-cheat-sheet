@@ -1,11 +1,14 @@
-# Now imagine you are installing a cluster-wide monitoring system like Prometheus. Prometheus needs to scrape metrics from every node and every pod in every namespace across the entire cluster. A standard Role won't work because it is trapped in one namespace. We need a ClusterRole.
+# Even if your ServiceAccount lives inside a specific monitoring namespace, a ClusterRoleBinding elevates its powers globally.
 
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: ClusterRoleBinding
 metadata:
-  # Notice: NO namespace field here! ClusterRoles are global.
-  name: global-metrics-reader
-rules:
-- apiGroups: [""]
-  resources: ["nodes", "pods", "services"]
-  verbs: ["get", "list", "watch"]
+  name: bind-prometheus-globally
+subjects:
+- kind: ServiceAccount
+  name: prometheus-sa
+  namespace: monitoring # The identity lives here...
+roleRef:
+  kind: ClusterRole
+  name: global-metrics-reader # ...but its power extends everywhere!
+  apiGroup: rbac.authorization.k8s.io
