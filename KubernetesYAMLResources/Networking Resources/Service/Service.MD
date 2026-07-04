@@ -1,7 +1,7 @@
 # Service
 
 ## 1. What is a Service?
-A Service is an abstraction that defines a logical set of Pods and a policy by which to access them. It uses Labels and Selectors to find which Pods it should send traffic to.
+A Kubernetes Service is a permanent entry point that provides a stable IP address and DNS name for a group of Pods. Since Pods are temporary and their IPs change when they restart, a Service ensures reliable communication, load-balances traffic across them, and abstracts away their changing IPs.
 
 In Kubernetes, a Service is simply a stable way to access your Pods, even when those Pods change.
 
