@@ -246,6 +246,67 @@ CNI is a networking plugin that enables communication between pods across differ
 
 ---
 
+### How Everything Works Together?
+
+#### The universal Kubernetes workflow
+```
+You
+ │
+ │ kubectl apply
+ ▼
+API Server
+ │
+ ├──► etcd
+ │     (stores desired/current state)
+ │
+ ├──► Scheduler
+ │     (chooses which worker node)
+ │
+ └──► Controllers
+       (make reality match your desired state)
+              │
+              ▼
+        Worker Node
+        ┌─────────────────┐
+        │ kubelet         │
+        │    │            │
+        │    ▼            │
+        │ Container Runtime│
+        │    │            │
+        │    ▼            │
+        │   Pod           │
+        │  [Container]    │
+        └─────────────────┘
+              │
+              ▼
+           Service
+              │
+              ▼
+            Users
+```
+Example: Run an Nginx website
+```
+You tell Kubernetes:
+
+replicas: 3
+image: nginx
+
+Meaning: "I want 3 Nginx Pods running."
+```
+Then the workflow is:
+
+- kubectl → sends your request to the API Server.
+- API Server → validates the request and records it.
+- etcd → stores the cluster's state.
+- Deployment Controller → notices you want 3 Pods and creates/maintains them through a ReplicaSet.
+- Scheduler → finds suitable worker nodes for the Pods.
+- kubelet on those nodes → receives the assignment.
+- Container Runtime (such as containerd) → starts the Nginx containers.
+- Pods → run your Nginx application.
+- Service → gives the Pods a stable network endpoint and sends traffic to them.
+- Ingress (if used) → can provide HTTP/HTTPS routing from outside the cluster.
+
+
 ## 🔹 Communication Flow
 
 * External systems → communicate via **API Server (HTTPS)**
