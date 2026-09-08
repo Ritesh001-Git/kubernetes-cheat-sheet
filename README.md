@@ -306,6 +306,39 @@ Then the workflow is:
 - Service → gives the Pods a stable network endpoint and sends traffic to them.
 - Ingress (if used) → can provide HTTP/HTTPS routing from outside the cluster.
 
+#### The most important idea
+
+- Kubernetes is basically a continuous reconciliation loop:
+```
+Desired state
+     ↓
+API Server
+     ↓
+Controllers/Scheduler
+     ↓
+Worker Nodes
+     ↓
+Actual state
+     ↓
+"Is actual = desired?"
+     ↓
+No → Kubernetes fixes it
+Yes → Keep watching
+```
+- So if one of your 3 Nginx Pods crashes:
+```
+3 Pods desired
+      ↓
+1 Pod crashes
+      ↓
+2 Pods actually running
+      ↓
+Controller notices
+      ↓
+Creates another Pod
+      ↓
+3 Pods running again ✅
+```
 
 ## 🔹 Communication Flow
 
