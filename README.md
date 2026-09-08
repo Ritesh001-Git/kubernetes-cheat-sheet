@@ -75,6 +75,8 @@ Kubernetes is mainly designed for **microservices architecture**, where multiple
 
 # 🏗️ Kubernetes Architecture
 
+<img width="1402" height="882" alt="kubernetes-cluster-architecture" src="https://github.com/user-attachments/assets/5c3cbabc-2580-4042-aa1b-cadb703c4491" />
+
 ## 🔹 High-Level Overview
 
 * Kubernetes cluster consists of:
