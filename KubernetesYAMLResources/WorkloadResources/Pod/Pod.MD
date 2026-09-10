@@ -84,3 +84,70 @@ spec:
 | `kubectl delete pod <pod-name>`              | Deletes a specific Pod. |
 | `kubectl delete -f filename.yaml`            | Deletes the Pod defined in the YAML file. |
 | `kubectl delete pod --all`                   | ⚠️ Deletes all Pods in the current namespace. |
+
+# Kubernetes Pod Status and Debugging Commands
+
+## 📊 Quick Summary of Pod Statuses
+
+| Status                       | Meaning                                                       |
+| ---------------------------- | ------------------------------------------------------------- |
+| `Pending`                    | The Pod is waiting to be scheduled or started                 |
+| `ContainerCreating`          | Kubernetes is preparing the container                         |
+| `Running`                    | The container is running successfully                         |
+| `Completed`                  | The container completed its task successfully                 |
+| `Error`                      | The container exited with an error                            |
+| `CrashLoopBackOff`           | The container keeps crashing and Kubernetes is restarting it  |
+| `ErrImagePull`               | Kubernetes failed to pull the container image                 |
+| `ImagePullBackOff`           | Kubernetes is retrying to pull the container image            |
+| `Init:0/1`                   | An init container is currently running                        |
+| `OOMKilled`                  | The container was killed because it exceeded its memory limit |
+| `Terminating`                | The Pod is being deleted                                      |
+| `CreateContainerConfigError` | There is a problem with the container configuration           |
+| `CreateContainerError`       | Kubernetes encountered an error while creating the container  |
+
+---
+
+## 🔧 Very Useful Kubernetes Debugging Commands
+
+### Check All Pods
+
+```bash
+kubectl get pods -n logging
+```
+
+### Get Detailed Pod Information and Events
+
+```bash
+kubectl describe pod <pod-name> -n logging
+```
+
+### Check Container Logs
+
+```bash
+kubectl logs <pod-name> -n logging
+```
+
+### Check Logs from a Previously Crashed Container
+
+```bash
+kubectl logs <pod-name> -n logging --previous
+```
+
+### Watch Pod Status in Real Time
+
+```bash
+kubectl get pods -n logging -w
+```
+
+### Check All Resources in a Namespace
+
+```bash
+kubectl get all -n logging
+```
+
+### Check Kubernetes Events
+
+```bash
+kubectl get events -n logging --sort-by=.metadata.creationTimestamp
+```
+
