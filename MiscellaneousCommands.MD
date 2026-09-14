@@ -9,3 +9,6 @@
 7. kubectl auth can-i get pods
 8. kubectl auth can-i get pods --as=apache-user -n apache
 9. kubectl exec -it apache-test -n apache -- sh
+10. kubectl get all
+11. kubectl get all -A (To see resources across all namespaces)
+12. kubectl api-resources (To see what types of resources exist in your cluster
